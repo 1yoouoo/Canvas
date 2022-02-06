@@ -1,10 +1,10 @@
 let canvas = document.querySelector('canvas');
+let ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // Rectangle
-let ctx = canvas.getContext("2d");
 ctx.fillStyle = "green";
 ctx.fillRect(60, 60, 150 ,150);
 ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';

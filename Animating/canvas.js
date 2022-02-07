@@ -35,26 +35,27 @@ class Circle {
     }
 }
 
-//여러개의 원을 만들어 보자
-function init() {
-    let c1 = new Circle();
-    let c2 = new Circle();
 
-    c1.init();
-    c2.init();
 
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, innerWidth, innerHeight);
-        c1.draw();
-        c1.move();
-        c2.draw();
-        c2.move();
-    }
-    animate();
-    // circle();
-}
-// init();
+// function init() {
+//     let c1 = new Circle();
+//     let c2 = new Circle();
+
+//     c1.init();
+//     c2.init();
+
+//     function animate() {
+//         requestAnimationFrame(animate);
+//         ctx.clearRect(0, 0, innerWidth, innerHeight);
+//         c1.move();
+//         c1.draw();
+//         c2.move();
+//         c2.draw();
+//     }
+//     animate();
+
+// }
+
 
 let circle_list = [];
 

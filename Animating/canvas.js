@@ -7,14 +7,14 @@ canvas.height = window.innerHeight;
 
 
 
+//화면 밖에 끼이는 버그있음
 
-
-let x = Math.random() * innerWidth;
-let y = Math.random() * innerHeight;
-let dx = 3;
-let dy = 3;
-let radius = 50;
-function animate() {
+let radius = 30;
+let x = Math.random() * (innerWidth - radius * 2) + radius ; 
+let y = Math.random() * (innerHeight - radius * 2) + radius ;
+let dx = (Math.random() - 0.5) * 8;
+let dy = (Math.random() - 0.5) * 8;
+function circle() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -22,12 +22,16 @@ function animate() {
     ctx.arc(x, y, radius, 0, Math.PI * 2, false);
     ctx.strokeStyle = 'blue';
     ctx.stroke();
+}
 
-    if(x + radius > innerWidth || x < radius) {
+function animate() {
+    circle();
+
+    if(x + radius > innerWidth || x - radius < 0) {
         dx = -dx;
     }
 
-    else if (y + radius> innerHeight || y < radius) {
+    else if (y + radius > innerHeight || y - radius < 0) {
         dy = -dy;
     }
 

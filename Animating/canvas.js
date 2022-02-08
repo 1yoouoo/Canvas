@@ -4,13 +4,12 @@ let ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// 너무 반짝거림
 let colorArray = [
-    'red',
-    'blue',
-    'green',
-    'pupple',
-    'orange'
+    '#3D5AB3',
+    '#273859',
+    '#3C6AA6',
+    '#6CA6D9',
+    '#4F5759'
 ]
 let mouse = {
     x : undefined,
@@ -23,8 +22,12 @@ let minRadius = 3
 window.addEventListener('mousemove', function(event){
     mouse.x = event.clientX
     mouse.y = event.clientY
-    console.log(event)
 })
+window.addEventListener('resize', function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+})
+
 
 class Circle {
     
@@ -34,13 +37,14 @@ class Circle {
         this.y = Math.random() * (innerHeight - this.radius * 2) + this.radius ;
         this.dx = (Math.random() - 0.5);
         this.dy = (Math.random() - 0.5);
+        this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     }
     
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         ctx.strokeStyle = 'white';
-        ctx.fillStyle = colorArray[Math.floor(Math.random() * colorArray.length)];
+        ctx.fillStyle = this.color;
         ctx.fill();
         ctx.stroke();
     }
@@ -69,7 +73,7 @@ class Circle {
 
 let circle_list = [];
 
-for(let i=0; i<500; i++) {
+for(let i=0; i<800; i++) {
     let circle = new Circle();
     circle.init()
     circle_list.push(circle)
@@ -79,11 +83,10 @@ function animate() {
     requestAnimationFrame(animate);
     
     ctx.clearRect(0, 0, innerWidth, innerHeight);
-    for(let i=0; i<500; i++) {
+    for(let i=0; i<800; i++) {
         let circle = circle_list[i];
         circle.draw();
         circle.move();
-        // console.log(x,y)
     }
 }
 animate();

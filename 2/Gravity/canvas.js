@@ -23,10 +23,31 @@ let gravity = 0.97
 let airFriction = 0.90
 let floorFriction =0.99
 
+
 window.addEventListener('resize', function(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 })
+
+class Obstacle {
+    
+    init() {
+        this.x = 90
+        this.y = 600
+        this.width = 400
+        this.height = 60
+        this.shadowColor = 'black';
+        this.shadowBlur = 5;
+    }
+
+    draw() {
+        ctx.fillStyle = "#756E5D";
+        ctx.shadowColor = this.shadowColor;
+        ctx.shadowBlur = this.shadowBlur;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.shadowBlur = 0;
+    }
+}
 
 
 class Circle {
@@ -50,7 +71,6 @@ class Circle {
     }
     
     move() {
-        // 화면 밖에가면 부딪히는 작용
         if (this.x + this.radius + this.dx > innerWidth || this.x - this.radius < 0) {
         this.dx = -this.dx;
         }
@@ -68,23 +88,30 @@ class Circle {
     }
     
 }
-// 바닥에 완전히 붙었을 때 
 let circle_list = [];
 
 for(let i=0; i<100; i++) {
     let circle = new Circle();
-    circle.init()
-    circle_list.push(circle)
+    circle.init();
+    circle_list.push(circle);
 }
+
+let obstacle = new Obstacle();
+
 
 function animate() {
     requestAnimationFrame(animate);
     
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+    obstacle.init();
+    obstacle.draw();
+    
     for(let i=0; i<100; i++) {
         let circle = circle_list[i];
         circle.draw();
         circle.move();
     }
 }
+
+
 animate();

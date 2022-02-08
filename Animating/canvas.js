@@ -4,11 +4,14 @@ let ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// 마우스를 올렸을 때 사이즈가 커지고 마우스에서 멀어지면 사이즈가 작아지게 만들자.
-    //1. 현재 마우스의 좌표 뽑기
-    //2. 각각의 원의 좌표 뽑기
-    //3. 1,2의 좌표를 비교하기
-    //4. 그에 맞는 조건문 생성
+// 너무 반짝거림
+let colorArray = [
+    'red',
+    'blue',
+    'green',
+    'pupple',
+    'orange'
+]
 let mouse = {
     x : undefined,
     y : undefined
@@ -20,6 +23,7 @@ let minRadius = 3
 window.addEventListener('mousemove', function(event){
     mouse.x = event.clientX
     mouse.y = event.clientY
+    console.log(event)
 })
 
 class Circle {
@@ -35,8 +39,9 @@ class Circle {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.strokeStyle = 'blue';
-        ctx.fillStyle = 
+        ctx.strokeStyle = 'white';
+        ctx.fillStyle = colorArray[Math.floor(Math.random() * colorArray.length)];
+        ctx.fill();
         ctx.stroke();
     }
     

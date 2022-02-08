@@ -20,7 +20,8 @@ let maxRadius = 20
 let minRadius = 2
 
 let gravity = 0.97
-let friction = 0.99
+let airFriction = 0.90
+let floorFriction =0.99
 
 window.addEventListener('resize', function(){
     canvas.width = window.innerWidth;
@@ -56,7 +57,8 @@ class Circle {
         
         this.x += this.dx;
         if (this.y + this.radius + this.dy > innerHeight) {
-            this.dy = -this.dy * friction ;
+            this.dy *= -airFriction ;
+            this.dx *= floorFriction
         }
         else {
             this.dy += gravity;
@@ -66,7 +68,7 @@ class Circle {
     }
     
 }
-
+// 바닥에 완전히 붙었을 때 
 let circle_list = [];
 
 for(let i=0; i<100; i++) {

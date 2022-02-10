@@ -44,6 +44,7 @@ class Board {
 
         for(let i=0; i<30; i++) {
             // debugger;
+            let circle = circle_list[i];
             let x = Math.random() * innerWidth;
             let y = Math.random() * innerHeight;
 
@@ -53,7 +54,7 @@ class Board {
                     x += obstacle.width
                     y += obstacle.height
                 }
-            circle_list[i].init(x, y);
+            circle.init(x, y);
         }
 
         function animate() {

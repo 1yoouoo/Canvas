@@ -11,13 +11,14 @@ let colorArray = [
     '#F18E65',
     '#EF746B'
 ]
-let mouse = {
-    x : undefined,
-    y : undefined
-}
+// let mouse = {
+//     x : undefined,
+//     y : undefined
+// }
 
 let maxRadius = 20
 let minRadius = 2
+let circleNumber = 150
 
 let gravity = 0.97
 let airFriction = 0.90
@@ -31,26 +32,26 @@ window.addEventListener('resize', function(){
 
 class Board {
     init() {
-        let circle_list = [];
+        let circleList = [];
         let obstacle = new Obstacle();
 
-        for(let i=0; i<30; i++) {
+        for(let i=0; i<circleNumber; i++) {
             let circle = new Circle();
-            circle_list.push(circle);
+            circleList.push(circle);
         }
 
 
         obstacle.init(200, 400, 360, 20);
 
-        for(let i=0; i<30; i++) {
+        for(let i=0; i<circleNumber; i++) {
             // debugger;
-            let circle = circle_list[i];
+            let circle = circleList[i];
             let x = Math.random() * innerWidth;
             let y = Math.random() * innerHeight;
 
             // 겹침
-            if((obstacle.x <= x && (obstacle.x + obstacle.width) >= x) &&
-                (obstacle.y <= y && (obstacle.y + obstacle.height) >= y)){
+            if((obstacle.x < x < obstacle.x + obstacle.width) &&
+                (obstacle.y < y < obstacle.y + obstacle.height)){
                     x += obstacle.width
                     y += obstacle.height
                 }
@@ -63,16 +64,16 @@ class Board {
             ctx.clearRect(0, 0, innerWidth, innerHeight);
             obstacle.draw();
             
-            for(let i=0; i<30; i++) {
-                let circle = circle_list[i];
+            for(let i=0; i<circleNumber; i++) {
+                let circle = circleList[i];
                 circle.draw();
+                
                 // circle.move();
             }
         }
 
 
         animate();
-
     }
 }
 
@@ -120,15 +121,8 @@ class Circle {
     
     init(x, y) {
         this.radius = Math.floor(Math.random() * maxRadius) + minRadius;
-        //(200, 400), (560, 420) 에 스폰되면 안됨
-
-        // this.x = innerWidth - (Math.random() * (400 - this.radius * 2) + this.radius);
-        // this.x = x * (innerWidth - this.radius * 2) + this.radius;
         this.x = x;
         this.y = y;
-        // && !(200 < Math.random() * (innerWidth - this.radius * 2) + this.radius < 400));
-
-        // this.y = y * (innerHeight - this.radius * 2) + this.radius ;
         this.dx = (Math.random() - 0.5);
         this.dy = (Math.random() - 0.5);
         this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
@@ -164,12 +158,12 @@ class Circle {
     }
     
 }
-// let circle_list = [];
+// let circleList = [];
 
-// for(let i=0; i<30; i++) {
+// for(let i=0; i<circleNumber; i++) {
 //     let circle = new Circle();
 //     circle.init();
-//     circle_list.push(circle);
+//     circleList.push(circle);
 // }
 
 // let obstacle = new Obstacle();
@@ -182,8 +176,8 @@ class Circle {
 //     obstacle.init(200, 400, 360, 20);
 //     obstacle.draw();
     
-//     for(let i=0; i<30; i++) {
-//         let circle = circle_list[i];
+//     for(let i=0; i<circleNumber; i++) {
+//         let circle = circleList[i];
 //         circle.draw();
 //         // circle.move();
 //     }

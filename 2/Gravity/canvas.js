@@ -29,6 +29,52 @@ window.addEventListener('resize', function(){
     canvas.height = window.innerHeight;
 })
 
+class Board {
+    init() {
+        let circle_list = [];
+        let obstacle = new Obstacle();
+
+        for(let i=0; i<30; i++) {
+            let circle = new Circle();
+            circle_list.push(circle);
+        }
+
+
+        obstacle.init(200, 400, 360, 20);
+
+        for(let i=0; i<30; i++) {
+            // debugger;
+            let x = Math.random() * innerWidth;
+            let y = Math.random() * innerHeight;
+
+            // 겹침
+            if((obstacle.x <= x && (obstacle.x + obstacle.width) >= x) &&
+                (obstacle.y <= y && (obstacle.y + obstacle.height) >= y)){
+                    x += obstacle.width
+                    y += obstacle.height
+                }
+            circle_list[i].init(x, y);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            obstacle.draw();
+            
+            for(let i=0; i<30; i++) {
+                let circle = circle_list[i];
+                circle.draw();
+                // circle.move();
+            }
+        }
+
+
+        animate();
+
+    }
+}
+
 class Obstacle {
     
     init(x, y, width, height) {
@@ -65,17 +111,23 @@ class Obstacle {
         ctx.fill();
         
         
-        // ctx.stroke();
     }
 }
 
 
 class Circle {
     
-    init() {
+    init(x, y) {
         this.radius = Math.floor(Math.random() * maxRadius) + minRadius;
-        this.x = Math.random() * (innerWidth - this.radius * 2) + this.radius ; 
-        this.y = Math.random() * (innerHeight - this.radius * 2) + this.radius ;
+        //(200, 400), (560, 420) 에 스폰되면 안됨
+
+        // this.x = innerWidth - (Math.random() * (400 - this.radius * 2) + this.radius);
+        // this.x = x * (innerWidth - this.radius * 2) + this.radius;
+        this.x = x;
+        this.y = y;
+        // && !(200 < Math.random() * (innerWidth - this.radius * 2) + this.radius < 400));
+
+        // this.y = y * (innerHeight - this.radius * 2) + this.radius ;
         this.dx = (Math.random() - 0.5);
         this.dy = (Math.random() - 0.5);
         this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
@@ -91,47 +143,52 @@ class Circle {
     }
     
     move() {
+        // 바닥에 충돌할 때
         if (this.x + this.radius + this.dx > innerWidth || this.x - this.radius < 0) {
-        this.dx = -this.dx;
+            this.dx = -this.dx;
         }
         
         this.x += this.dx;
+
         if (this.y + this.radius + this.dy > innerHeight) {
-            this.dy *= -airFriction ;
-            this.dx *= floorFriction
+            this.dy *= -airFriction ; // 공기 저항
+            this.dx *= floorFriction; // 바닥 마찰력
         }
         else {
             this.dy += gravity;
         }
         this.y += this.dy;
         
+        
     }
     
 }
-let circle_list = [];
+// let circle_list = [];
 
-for(let i=0; i<100; i++) {
-    let circle = new Circle();
-    circle.init();
-    circle_list.push(circle);
-}
+// for(let i=0; i<30; i++) {
+//     let circle = new Circle();
+//     circle.init();
+//     circle_list.push(circle);
+// }
 
-let obstacle = new Obstacle();
+// let obstacle = new Obstacle();
 
 
-function animate() {
-    requestAnimationFrame(animate);
+// function animate() {
+//     requestAnimationFrame(animate);
     
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-    obstacle.init(200, 400, 360, 20);
-    obstacle.draw();
+//     ctx.clearRect(0, 0, innerWidth, innerHeight);
+//     obstacle.init(200, 400, 360, 20);
+//     obstacle.draw();
     
-    for(let i=0; i<100; i++) {
-        let circle = circle_list[i];
-        circle.draw();
-        circle.move();
-    }
-}
+//     for(let i=0; i<30; i++) {
+//         let circle = circle_list[i];
+//         circle.draw();
+//         // circle.move();
+//     }
+// }
+
+new Board().init()
 
 
-animate();
+// animate();

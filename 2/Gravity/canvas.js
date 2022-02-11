@@ -1,5 +1,5 @@
-let canvas = document.querySelector('canvas');
-let ctx = canvas.getContext("2d");
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -11,13 +11,9 @@ let colorArray = [
     '#F18E65',
     '#EF746B'
 ]
-// let mouse = {
-//     x : undefined,
-//     y : undefined
-// }
 
-let maxRadius = 20
-let minRadius = 2
+const maxRadius = 20
+const minRadius = 2
 let circleNumber = 100
 
 let gravity = 0.97
@@ -69,7 +65,7 @@ class Board {
                 let circle = circleList[i];
                 circle.draw();
                 
-                circle.move();
+                circle.move(obstacle);
             }
         }
 
@@ -138,7 +134,7 @@ class Circle {
         ctx.stroke();
     }
     
-    move() {
+    move(obstacle) {
         // 바닥에 충돌할 때
 
         if (this.x + this.radius + this.dx > innerWidth || this.x - this.radius < 0) {
@@ -148,8 +144,8 @@ class Circle {
         this.x += this.dx;
 
         if (this.y + this.radius + this.dy > innerHeight 
-            || ((this.y + this.radius + this.dy > 400 ) && (this.y + this.radius + this.dy) < 420) 
-            && ((this.x + this.radius + this.dx > 200) && (this.x + this.radius + this.dx < 560 ))
+            || ((this.y + this.radius + this.dy > obstacle.y ) && (this.y + this.radius + this.dy) < (obstacle.y + obstacle.height)) 
+            && ((this.x + this.radius + this.dx > obstacle.x) && (this.x + this.radius + this.dx < (obstacle.x + obstacle.width) ))
             ) {
             this.dy *= -airFriction ; // 공기 저항
             this.dx *= floorFriction; // 바닥 마찰력

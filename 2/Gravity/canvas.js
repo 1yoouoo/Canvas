@@ -18,7 +18,7 @@ let colorArray = [
 
 let maxRadius = 20
 let minRadius = 2
-let circleNumber = 150
+let circleNumber = 100
 
 let gravity = 0.97
 let airFriction = 0.90
@@ -46,14 +46,14 @@ class Board {
         for(let i=0; i<circleNumber; i++) {
             // debugger;
             let circle = circleList[i];
-            let x = Math.random() * innerWidth;
-            let y = Math.random() * innerHeight;
+            let x = Math.random() * (innerWidth - maxRadius * 2) + maxRadius;
+            let y = Math.random() * (innerHeight - maxRadius * 2) + maxRadius;
+           
 
             // 겹침
-            if((obstacle.x < x < obstacle.x + obstacle.width) &&
-                (obstacle.y < y < obstacle.y + obstacle.height)){
-                    x += obstacle.width
-                    y += obstacle.height
+            if((obstacle.x - maxRadius < x && obstacle.x + obstacle.width + maxRadius > x) && (obstacle.y - maxRadius < y && obstacle.y + obstacle.height + maxRadius > y)){
+                    x += obstacle.width + maxRadius * 2
+                    y += obstacle.height + maxRadius * 2
                 }
             circle.init(x, y);
         }

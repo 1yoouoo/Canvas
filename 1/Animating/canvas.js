@@ -70,21 +70,20 @@ class Circle {
     }
     
 }
-
-let circle_list = [];
+let circles = [];
 
 for(let i=0; i<800; i++) {
     let circle = new Circle();
     circle.init()
-    circle_list.push(circle)
+    circles.push(circle)
 }
 
 function animate() {
     requestAnimationFrame(animate);
-    
     ctx.clearRect(0, 0, innerWidth, innerHeight);
+    
     for(let i=0; i<800; i++) {
-        let circle = circle_list[i];
+        let circle = circles[i];
         circle.draw();
         circle.move();
     }

@@ -14,8 +14,8 @@ class Circle {
         this.radius = 10;
         this.x = mouse.x;
         this.y = mouse.y;
-        this.dx = 1
-        this.dy = 1
+        this.dx = Math.random() - 0.5
+        this.dy = Math.random() - 0.5
 
         this.color = '#3D5AB3';
     }
@@ -34,22 +34,31 @@ class Circle {
         this.y += this.dy
     }
 }
+// debugger
 let circles = []
-let circle = new Circle();
-
-function animate() {
-    requestAnimationFrame(animate);
-    circle.draw();
-    circle.move();
-}
-animate();
 
 addEventListener('click', event => {
     mouse.x = event.clientX
     mouse.y = event.clientY
     for(let i=0; i<5; i++) {
+        let circle = new Circle();
         circle.init()
         circles.push(circle)
-        console.log(mouse.x, mouse.y, circles)
+        console.log(mouse.x, mouse.y, circle, circles)
     }
 })
+animate();
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+    for(let i=0; i<5; i++) {
+        let circle = circles[i];
+        circles.forEach(circle => {
+            circle.draw();
+            circle.move();
+            
+        });
+    }
+}

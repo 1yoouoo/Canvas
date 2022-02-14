@@ -43,7 +43,7 @@ class Circle {
         this.y = mouse.y;
         this.dx = dx
         this.dy = dy
-        this.color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+        this.color = `hsl(${Math.random() * 360}, 60%, 60%)`;
         this.opacity = opacity;
     }
     
